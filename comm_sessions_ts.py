@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 from typing import Any
-from environs import Env
 
 import requests
 import win32com.client
+from environs import Env
 
 from operators_manager_tcp import OperatorsmanagerTcpClient
 from orbitron_tcp import OrbitronTcpClient
@@ -131,13 +131,13 @@ start_sessions = [datetime.fromisoformat(session['start_session_dt']) +
                                          timedelta(hours=time_offset, minutes=start_time_delay) for session in sessions]
 create_task(script_name=start_script_name,
             trigger_times=start_sessions,
-            task_folder='Start software')
+            task_name='Start software')
 
 stop_sessions = [datetime.fromisoformat(session['end_session_dt']) +
                                        timedelta(hours=time_offset, minutes=stop_time_delay) for session in sessions]
 create_task(script_name=start_script_name,
             trigger_times=stop_sessions,
-            task_folder='End software')
+            task_name='End software')
 
 write_session_times_txt(start_sessions, stop_sessions, output_file_name)
 
