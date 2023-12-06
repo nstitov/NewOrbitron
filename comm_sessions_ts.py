@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Any
+from environs import Env
 
 import requests
 import win32com.client
@@ -25,8 +26,10 @@ samara_station_lat = 53.21204
 samara_station_alt = 137
 samara_station_el = 0
 
-BOT_TOKEN = '6634211407:AAEGTF73qKbWkNvi8W2Ry1WIQTt1FPy9T9A'
-chat_id = -4098907292
+env = Env()
+env.read_env()
+BOT_TOKEN = env('BOT_TOKEN')
+CHAT_ID = env('CHAT_ID')
 
 def create_task(script_name: str, trigger_times: list[datetime], task_name: str, task_folder: str = 'ЦУП'):
     '''Sets tasks for start and stop communication scripts in Windows Task Scheduler.'''
@@ -147,6 +150,6 @@ write_max_elevation_sessions_info_to_telegram(sessions=sessions,
                                               evening_operator=operators['evening_operator'],
                                               morning_operator=operators['morning_operator'],
                                               BOT_TOKEN=BOT_TOKEN,
-                                              chat_id=chat_id,
+                                              chat_id=CHAT_ID,
                                               time_offset=time_offset,
                                               time_delay=start_time_delay)
